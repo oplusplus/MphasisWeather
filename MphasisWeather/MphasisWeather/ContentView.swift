@@ -8,17 +8,31 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var city = "New York"
+    @State var showWeather = false
+    let vm = ViewModel()
+    
     var body: some View {
-        VStack {
+        VStack(spacing: 12) {
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundStyle(.tint)
-            Text("Hello, world!")
+            TextField("City", text: $city)
+                .multilineTextAlignment(.center)
+                .foregroundStyle(Color.blue)
+            Button("Get weather") {
+                Task {
+                    await vm.fetchData(city: city)
+                    showWeather = true
+                }
+            }
+            .sheet(isPresented: $showWeather) {
+                if let data = vm.weatherData, let icon = vm.icon {
+                    WeatherDisplay(weatherData: data, weatherIcon: icon)
+                }
+            }
         }
         .padding()
     }
-}
-
-#Preview {
-    ContentView()
 }
