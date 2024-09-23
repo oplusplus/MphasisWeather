@@ -84,7 +84,7 @@ extension WeatherDetails {
     var feelsLikeInCelsius: Double { feelsLikeInKelvin - 273.15 }
     var feelsLikeInFahrenheit: Double { (feelsLikeInCelsius * 9 / 5) + 32 }
     var minTempInCelsius: Double { minTempInKelvin - 273.15 }
-    var minTempInFarenheit: Double { (minTempInCelsius * 9 / 5) + 32 }
+    var minTempInFahrenheit: Double { (minTempInCelsius * 9 / 5) + 32 }
     var maxTempInCelsius: Double { maxTempInKelvin - 273.15 }
     var maxTempInFahrenheit: Double { (maxTempInCelsius * 9 / 5) + 32 }
     
