@@ -15,12 +15,13 @@ struct WeatherDisplay: View {
     var body: some View {
         VStack(spacing: 12) {
             Text(weatherData.name)
+                .font(.system(size: 36))
             Image(uiImage: weatherIcon)
                 .imageScale(.large)
                 .foregroundStyle(.tint)
             let summaryArray = weatherData.weather.compactMap { $0.summary }
             if !summaryArray.isEmpty {
-                Text("\(summaryArray.first!)")
+                Text("\(summaryArray.first!.capitalizedSentence)")
             }
             let currentTempF = Int(weatherData.main.tempInFahrenheit.rounded())
             let currentTempC = Int(weatherData.main.tempInCelsius.rounded())
@@ -36,10 +37,9 @@ struct WeatherDisplay: View {
             Text("Today's low: \(minTempF)F / \(minTempC)C")
             Text("Humidity: \(weatherData.main.humidity)%")
             let windSpeed = Int(weatherData.wind.speedInMPH.rounded())
-            Text("Wind blowing \(getDirectionFromDegrees(weatherData.wind.degrees)) at \(windSpeed)mph")
-            Text("Sunrise at \(weatherData.sunriseAsDate)")
-            Text("Sunset at \(weatherData.sunsetAsDate)")
-//            Text("Visibility: \(Int(Double(weatherData.visibility / 100).rounded()))%")
+            Text("Wind blowing \(getDirectionFromDegrees(weatherData.wind.degrees)) at \(windSpeed) mph")
+            Text("Sunrise at \(weatherData.sunriseAsTime)")
+            Text("Sunset at \(weatherData.sunsetAsTime)")
         }
         .padding()
     }
@@ -65,4 +65,12 @@ struct WeatherDisplay: View {
         return "No direction detected"
     }
     
+}
+
+extension String {
+    var capitalizedSentence: String {
+        let firstLetter = self.prefix(1).capitalized
+        let remainingLetters = self.dropFirst().lowercased()
+        return firstLetter + remainingLetters
+    }
 }

@@ -16,4 +16,9 @@ class Coordinator: ObservableObject {
         self.weatherData = weatherData
         self.icon = icon
     }
+
+    @ViewBuilder
+    func view() -> some View {
+        WeatherDisplay(weatherData: weatherData, weatherIcon: icon)
+    }
 }

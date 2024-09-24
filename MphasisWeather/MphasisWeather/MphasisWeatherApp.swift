@@ -11,7 +11,7 @@ import SwiftUI
 struct MphasisWeatherApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
         }
     }
 }
