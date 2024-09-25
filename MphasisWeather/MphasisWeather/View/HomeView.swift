@@ -5,14 +5,6 @@
 //  Created by Michael deBoisblanc on 9/22/24.
 //
 
-
-/*
- WHAT'S LEFT TO DO:
- TESTS
- ADD COMMENTS DESCRIBING CODE AND WHAT I WOULD DO WITH MORE TIME
- CLEAN UP ORGANIZE (MODEL FILES FOR EXAMPLE)
- */
-
 import SwiftUI
 
 struct HomeView: View {
@@ -20,7 +12,7 @@ struct HomeView: View {
     @StateObject private var locationManager = LocationManager()
     @State var city = LAST_CITY_SEARCHED
     @State var showWeather = false
-    let vm = ViewModel()
+    let hvm = HomeViewModel()
     @State var error: Error? = nil
     
     var body: some View {
@@ -33,16 +25,18 @@ struct HomeView: View {
                 .foregroundStyle(Color.blue)
             Button("Get weather for selected city") {
                 Task {
-                    do { try await vm.fetchData(city: city)
-                        LAST_CITY_SEARCHED = city
-                        showWeather = true
+                    do { try await hvm.fetchData(city: city)
+                        if let data = hvm.weatherData, let icon = hvm.icon { //make sure we have data before launching display screen.
+                            LAST_CITY_SEARCHED = city
+                            showWeather = true
+                        }
                     } catch {
                         self.error = error
                     }
                 }
             }
             .sheet(isPresented: $showWeather) {
-                if let data = vm.weatherData, let icon = vm.icon {
+                if let data = hvm.weatherData, let icon = hvm.icon {
                     let coordinator = Coordinator(weatherData: data, icon: icon)
                     coordinator.view()
                 }
@@ -63,11 +57,11 @@ struct HomeView: View {
         .errorAlert(error: $error)
     }
     
-    func getWeatherByCoordinates() async {
+    func getWeatherByCoordinates() async { //If given more time, I would look into creating a callback upon initial location permission selection that calls the following code where lastKnownLocation is not nil. This will create going to WeatherDisplay view upon the initial granting of location.
         if let coordinate = locationManager.lastKnownLocation {
             do {
-                let name = try await vm.fetchLocationName(lat: coordinate.latitude, long: coordinate.longitude)
-                try await vm.fetchData(city: name)
+                let name = try await hvm.fetchLocationName(lat: coordinate.latitude, long: coordinate.longitude)
+                try await hvm.fetchData(city: name)
                 showWeather = true
             } catch {
                 self.error = error
@@ -91,12 +85,6 @@ extension View {
 
 struct LocalizedAlertError: LocalizedError {
     let underlyingError: LocalizedError
-    var errorDescription: String? {
-        underlyingError.errorDescription
-    }
-    var recoverySuggestion: String? {
-        underlyingError.recoverySuggestion
-    }
     var localizedDescription: String? {
         underlyingError.localizedDescription
     }

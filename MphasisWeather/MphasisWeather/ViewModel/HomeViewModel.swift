@@ -1,12 +1,12 @@
 //
-//  ViewModel.swift
+//  HomeViewModel.swift
 //  MphasisWeather
 //
 //  Created by Michael deBoisblanc on 9/23/24.
 //
 import UIKit
 
-class ViewModel: ObservableObject {
+class HomeViewModel: ObservableObject {
     @Published var weatherData: WeatherData? = nil
     @Published var icon: UIImage? = nil
     
