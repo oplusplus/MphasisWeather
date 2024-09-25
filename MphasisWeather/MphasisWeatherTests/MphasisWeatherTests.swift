@@ -57,16 +57,16 @@ struct MphasisWeatherTests {
     @Test func testGetDirectionFromDegrees() {
         let display = WeatherDisplay(weatherData: weatherData, weatherIcon: UIImage())
         let weatherDisplayViewModel = WeatherDisplayViewModel(weatherData: display.weatherData, icon: display.weatherIcon)
-        let result1 = weatherDisplayViewModel.getDirectionFromDegrees(3) // N
-        let result2 = weatherDisplayViewModel.getDirectionFromDegrees(39) // NE
-        let result3 = weatherDisplayViewModel.getDirectionFromDegrees(70) // E
-        let result4 = weatherDisplayViewModel.getDirectionFromDegrees(140) // SE
-        let result5 = weatherDisplayViewModel.getDirectionFromDegrees(175) // S
-        let result6 = weatherDisplayViewModel.getDirectionFromDegrees(210) // SW
-        let result7 = weatherDisplayViewModel.getDirectionFromDegrees(270) // W
-        let result8 = weatherDisplayViewModel.getDirectionFromDegrees(298) // NW
+        let resultN = weatherDisplayViewModel.getDirectionFromDegrees(3)
+        let resultNE = weatherDisplayViewModel.getDirectionFromDegrees(39)
+        let resultE = weatherDisplayViewModel.getDirectionFromDegrees(70)
+        let resultSE = weatherDisplayViewModel.getDirectionFromDegrees(140)
+        let resultS = weatherDisplayViewModel.getDirectionFromDegrees(175)
+        let resultSW = weatherDisplayViewModel.getDirectionFromDegrees(210)
+        let resultW = weatherDisplayViewModel.getDirectionFromDegrees(270)
+        let resultNW = weatherDisplayViewModel.getDirectionFromDegrees(298)
         
-        #expect(result1 == "N" && result2 == "NE" && result3 == "E" && result4 == "SE" && result5 == "S" && result6 == "SW" && result7 == "W" && result8 == "NW")
+        #expect(resultN == "N" && resultNE == "NE" && resultE == "E" && resultSE == "SE" && resultS == "S" && resultSW == "SW" && resultW == "W" && resultNW == "NW")
     }
 
 }
