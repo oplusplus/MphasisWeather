@@ -47,9 +47,11 @@ struct MphasisWeatherTests {
         #expect(lm.lastKnownLocation == nil && lm.manager.delegate == nil)
         lm.checkLocationAuthorization()
         #expect(lm.manager.delegate != nil)
-        let location = CLLocation(latitude: 40.7128, longitude: -73.935242)
+        let lat = 40.7128
+        let long = -73.935242
+        let location = CLLocation(latitude: lat, longitude: long)
         lm.locationManager(lm.manager, didUpdateLocations: [location])
-        #expect(lm.lastKnownLocation != nil && lm.lastKnownLocation!.latitude == 40.7128 && lm.lastKnownLocation!.longitude == -73.935242)
+        #expect(lm.lastKnownLocation != nil && lm.lastKnownLocation!.latitude == lat && lm.lastKnownLocation!.longitude == long)
     }
     
     @Test func testGetDirectionFromDegrees() {
