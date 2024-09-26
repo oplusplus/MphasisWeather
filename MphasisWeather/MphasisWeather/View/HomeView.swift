@@ -12,7 +12,7 @@ struct HomeView: View {
     @StateObject private var locationManager = LocationManager()
     @State var city = LAST_CITY_SEARCHED
     @State var showWeather = false
-    let hvm = HomeViewModel()
+    let hvm = HomeViewModel(service: NetworkService())
     @State var error: Error? = nil
     
     var body: some View {
@@ -57,7 +57,7 @@ struct HomeView: View {
         .errorAlert(error: $error)
     }
     
-    func getWeatherByCoordinates() async { //If given more time, I would look into creating a callback upon initial location permission selection that calls the following code where lastKnownLocation is not nil. This will create going to WeatherDisplay view upon the initial granting of location.
+    func getWeatherByCoordinates() async { //If given more time, I would look into creating a callback upon initial location permission selection that calls the following code with lastKnownLocation not being nil. This will create going to WeatherDisplay view upon the initial granting of location.
         if let coordinate = locationManager.lastKnownLocation {
             do {
                 let name = try await hvm.fetchLocationName(lat: coordinate.latitude, long: coordinate.longitude)
