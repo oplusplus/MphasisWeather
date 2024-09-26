@@ -14,7 +14,7 @@ struct WeatherDisplay: View {
 
     
     var body: some View {
-        let weatherDisplayViewModel: WeatherDisplayViewModel = WeatherDisplayViewModel(weatherData: weatherData, icon: weatherIcon)
+        let weatherDisplayViewModel = WeatherDisplayViewModel(weatherData: weatherData, icon: weatherIcon)
         weatherDisplayViewModel.getMainView()
         .padding()
     }

@@ -12,7 +12,7 @@ struct HomeView: View {
     @StateObject private var locationManager = LocationManager()
     @State var city = LAST_CITY_SEARCHED
     @State var showWeather = false
-    let hvm = HomeViewModel(service: NetworkService())
+    let vm = HomeViewModel(service: NetworkService())
     @State var error: Error? = nil
     
     var body: some View {
@@ -25,8 +25,8 @@ struct HomeView: View {
                 .foregroundStyle(Color.blue)
             Button("Get weather for selected city") {
                 Task {
-                    do { try await hvm.fetchData(city: city)
-                        if let data = hvm.weatherData, let icon = hvm.icon { //make sure we have data before launching display screen.
+                    do { try await vm.fetchData(city: city)
+                        if let data = vm.weatherData, let icon = vm.icon { //make sure we have data before launching display screen.
                             LAST_CITY_SEARCHED = city
                             showWeather = true
                         }
@@ -36,7 +36,7 @@ struct HomeView: View {
                 }
             }
             .sheet(isPresented: $showWeather) {
-                if let data = hvm.weatherData, let icon = hvm.icon {
+                if let data = vm.weatherData, let icon = vm.icon {
                     let coordinator = Coordinator(weatherData: data, icon: icon)
                     coordinator.view()
                 }
@@ -57,11 +57,11 @@ struct HomeView: View {
         .errorAlert(error: $error)
     }
     
-    func getWeatherByCoordinates() async { //If given more time, I would look into creating a callback upon initial location permission selection that calls the following code with lastKnownLocation not being nil. This will create going to WeatherDisplay view upon the initial granting of location.
+    func getWeatherByCoordinates() async { //If given more time, I would look into creating a callback upon initial location permission granted selection that calls the following code with lastKnownLocation not being nil. This will create going to WeatherDisplay view upon the initial granting of location permission.
         if let coordinate = locationManager.lastKnownLocation {
             do {
-                let name = try await hvm.fetchLocationName(lat: coordinate.latitude, long: coordinate.longitude)
-                try await hvm.fetchData(city: name)
+                let name = try await vm.fetchLocationName(lat: coordinate.latitude, long: coordinate.longitude)
+                try await vm.fetchData(city: name)
                 showWeather = true
             } catch {
                 self.error = error

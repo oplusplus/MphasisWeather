@@ -24,7 +24,7 @@ final class LocationManager: NSObject, CLLocationManagerDelegate, ObservableObje
         case .authorizedAlways://This authorization allows user all location services and receive location events whether or not the app is in use.
             print("Location authorizedAlways")
             
-        case .authorizedWhenInUse://This authorization allows user to use all location services and receive location events only when the app is in use
+        case .authorizedWhenInUse://This authorization allows user to use all location services and receive location events only when the app is in use.
             print("Location authorized when in use")
             lastKnownLocation = manager.location?.coordinate
             
