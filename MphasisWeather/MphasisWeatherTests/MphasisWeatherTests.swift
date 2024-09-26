@@ -75,7 +75,7 @@ struct MphasisWeatherTests {
        let vm = HomeViewModel(service: service)
        let name = try await vm.fetchLocationName(lat: newYorkLat, long: newYorkLong)
        try await vm.fetchData(city: name)
-       #expect(vm.weatherData != nil && vm.icon != nil)
+       #expect(vm.weatherData == weatherData && vm.icon == service.iconImage)
     }
     
     @Test func testHomeViewModelUnhappyPath() async throws {
@@ -88,6 +88,8 @@ struct MphasisWeatherTests {
 }
 
 struct MockNetworkService: NetworkServiceable {
+    
+    let iconImage = UIImage()
         
     func fetchData(city: String) async throws -> WeatherData? {
         if city == "New York" {
@@ -127,7 +129,7 @@ struct MockNetworkService: NetworkServiceable {
     }
     
     func fetchIcon(iconCode: String) async -> UIImage? {
-        return UIImage()
+        return iconImage
     }
     
     func fetchNameFromLocation(lat: Double, long: Double) async throws -> String {

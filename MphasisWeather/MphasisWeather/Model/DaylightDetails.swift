@@ -6,7 +6,7 @@
 //
 
 
-struct DaylightDetails: Codable {
+struct DaylightDetails: Codable, Equatable {
     let sunriseInUNIXTimestamp: Int
     let sunsetInUNIXTimestamp: Int
 }

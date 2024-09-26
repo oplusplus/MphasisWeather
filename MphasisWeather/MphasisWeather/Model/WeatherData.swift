@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-struct WeatherData: Codable {
+struct WeatherData: Codable, Equatable {
     let coord: Coordinates
     let weather: [WeatherOverview]
     let main: WeatherDetails

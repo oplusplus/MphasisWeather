@@ -6,7 +6,7 @@
 //
 
 
-struct WeatherOverview: Codable {
+struct WeatherOverview: Codable, Equatable {
     let id: Int
     let overview: String
     let summary: String

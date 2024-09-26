@@ -5,7 +5,7 @@
 //  Created by Michael deBoisblanc on 9/24/24.
 //
 
-struct WeatherDetails: Codable {
+struct WeatherDetails: Codable, Equatable {
     let tempInKelvin: Double
     let feelsLikeInKelvin: Double
     let minTempInKelvin: Double
