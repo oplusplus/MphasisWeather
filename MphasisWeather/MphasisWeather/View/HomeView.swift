@@ -26,7 +26,7 @@ struct HomeView: View {
             Button("Get weather for selected city") {
                 Task {
                     do { try await vm.fetchData(city: city)
-                        if let data = vm.weatherData, let icon = vm.icon { //make sure we have data before launching display screen.
+                        if vm.weatherData != nil && vm.icon != nil { //make sure we have data before launching display screen.
                             LAST_CITY_SEARCHED = city
                             showWeather = true
                         }

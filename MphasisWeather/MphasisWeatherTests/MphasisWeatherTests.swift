@@ -41,17 +41,18 @@ struct MphasisWeatherTests {
         name: "New York",
         code: 200
     )
+    
+    let newYorkLat = 40.7128
+    let newYorkLong = -73.935242
 
     @Test func testLocationManager() async throws {
         let lm = LocationManager()
         #expect(lm.lastKnownLocation == nil && lm.manager.delegate == nil)
         lm.checkLocationAuthorization()
         #expect(lm.manager.delegate != nil)
-        let lat = 40.7128
-        let long = -73.935242
-        let location = CLLocation(latitude: lat, longitude: long)
+        let location = CLLocation(latitude: newYorkLat, longitude: newYorkLong)
         lm.locationManager(lm.manager, didUpdateLocations: [location])
-        #expect(lm.lastKnownLocation != nil && lm.lastKnownLocation!.latitude == lat && lm.lastKnownLocation!.longitude == long)
+        #expect(lm.lastKnownLocation!.latitude == newYorkLat && lm.lastKnownLocation!.longitude == newYorkLong)
     }
     
     @Test func testGetDirectionFromDegrees() {
@@ -72,7 +73,8 @@ struct MphasisWeatherTests {
    @Test func testHomeViewModelHappyPath() async throws {
        let service = MockNetworkService()
        let vm = HomeViewModel(service: service)
-       try await vm.fetchData(city: "New York")
+       let name = try await vm.fetchLocationName(lat: newYorkLat, long: newYorkLong)
+       try await vm.fetchData(city: name)
        #expect(vm.weatherData != nil && vm.icon != nil)
     }
     
